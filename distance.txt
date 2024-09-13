@@ -1,0 +1,204 @@
+#include <iostream>
+using namespace std;
+
+class feet_inch;
+class cm_m;
+
+class feet_inch{
+    private:
+     double feet;
+     double inch;
+    public:
+      void display();
+      void output();
+      void getdata(double,double);
+      friend feet_inch add(feet_inch,cm_m);
+      friend cm_m add(cm_m y,feet_inch);
+       friend feet_inch sub(feet_inch,cm_m);
+      friend cm_m sub(cm_m y,feet_inch);
+};
+
+
+class cm_m{
+    private:
+     double cm;
+     double m;
+    public:
+      void display();
+      void output();
+      void getdata(double,double);
+      friend feet_inch add(feet_inch,cm_m);
+      friend cm_m add(cm_m y,feet_inch);
+       friend feet_inch sub(feet_inch,cm_m);
+      friend cm_m sub(cm_m y,feet_inch);
+};
+
+void feet_inch::getdata(double f,double i){
+    feet=f;
+    inch=i;
+}
+
+void feet_inch::display(){
+    cout<<"\n Addition of number in feet is:"<<feet;
+     cout<<"\n Addition of number in inch is:"<<inch;
+}
+
+void feet_inch::output(){
+    cout<<"\n Subtraction of number in feet is:"<<feet;
+     cout<<"\n Subtraction of number in inch is:"<<inch;
+}
+
+void cm_m::getdata(double c,double m){
+    cm=c;
+    m=m;
+}
+
+void cm_m::display(){
+    cout<<"\n Addition of number in cm is:"<<cm;
+     cout<<"\n Addition of number in m is:"<<m;
+}
+void cm_m::output(){
+    cout<<"\n Subtraction of number in cm is:"<<cm;
+     cout<<"\n Subtraction of number in m is:"<<m;
+}
+
+
+feet_inch add(feet_inch x,cm_m y){
+    feet_inch temp,ans;
+    double result;
+   result=x.feet*30.48+x.inch*2.54+y.cm+y.m*100;   //result in cm
+   
+   temp.feet=result*0.0328;
+   temp.inch=result*0.394;
+   ans.feet=int(temp.feet);
+   ans.inch=int(temp.inch);
+   return ans;
+}
+
+cm_m add(cm_m y,feet_inch x){
+    cm_m temp,ans;
+    double result;
+   result=x.feet*30.48+x.inch*2.54+y.cm+y.m*100;   //result in cm
+   temp.cm=result;
+   temp.m=result*100;
+//    ans.cm=int(temp.cm);
+//    ans.m=int(temp.m);
+   return ans;
+}
+
+feet_inch sub(feet_inch x,cm_m y){
+    feet_inch temp,ans;
+    double result;
+   result=x.feet*30.48-x.inch*2.54-y.cm-y.m*100;   //result in cm
+   
+   temp.feet=result*0.0328;
+   temp.inch=result*0.394;
+   if(result<0){
+     temp.feet=-result*0.0328;
+   temp.inch=-result*0.394;
+
+   }
+   ans.feet=int(temp.feet);
+   ans.inch=int(temp.inch);
+   return ans;
+}
+
+cm_m sub(cm_m y,feet_inch x){
+    cm_m temp,ans;
+    double result;
+   result=x.feet*30.48-x.inch*2.54-y.cm-y.m*100;   //result in cm
+   
+   if(result<0){
+   temp.cm=-result;
+   temp.m=-result*100;
+   }
+   else{
+    temp.cm=result;
+   temp.m=result*100;
+   }
+   ans.cm=int(temp.cm);
+   ans.m=int(temp.m);
+   return ans;
+}
+
+
+
+int main() {
+    feet_inch f1,P;
+    cm_m f2,Q;
+    double f,i,c,m;
+    int op,ch;
+    cout<<"\nEnter dimention in feet:";
+    cin>>f;
+    cout<<"\nEnter dimention in inch:";
+    cin>>i;
+    f1.getdata(f,i);
+   
+    cout<<"\nEnter dimention in cm:";
+    cin>>c;
+    cout<<"\nEnter dimention in m:";
+    cin>>m;
+    f2.getdata(c,m);
+
+cout<<"\nEnter 1:Add\n2.Substract";
+   
+    cin>>ch;
+   
+
+   switch (ch)
+   {
+   case  1:
+   
+    cout<<"Enter 1:Display addition of dimentions in feet and inches \n2.Display addition of dimentions in centimeter and meter";
+   
+    cin>>op;
+   
+    switch(op){
+        case 1:
+           P=add(f1,f2);
+           P.display();
+           break;
+        case 2:
+        Q=add(f2,f1);
+        Q.display();
+        break;
+    }
+    break;
+
+    case 2:
+
+    cout<<"Enter 1:Display subtraction of dimentions in feet and inches \n2.Display substraction of dimentions in centimeter and meter";
+   
+    cin>>op;
+   
+    switch(op){
+        case 1:
+           P=sub(f1,f2);
+           P.output();
+           break;
+        case 2:
+           Q=sub(f2,f1);
+           Q.output();
+        break;
+    }
+
+   }
+    return 0;
+}
+
+/*OUTPUT
+Enter dimention in feet:12
+
+Enter dimention in inch:10
+
+Enter dimention in cm:14
+
+Enter dimention in m:5
+
+Enter 1:Add
+2.Substract1
+Enter 1:Display addition of dimentions in feet and inches
+2.Display addition of dimentions in centimeter and meter1
+
+ Addition of number in feet is:13
+ Addition of number in inch is:159
